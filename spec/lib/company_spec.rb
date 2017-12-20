@@ -35,6 +35,42 @@ RSpec.describe Fareharbor::Company do
     end
   end
 
+  describe :availability do
+    subject { company.availability(availability_id: availability_id) }
+    let(:availability_json) { fixture('availability.json') }
+    let(:availability_url) do
+      "#{Fareharbor.configuration.fareharbor_url}/companies/#{shortname}/availabilities/#{availability_id}"
+    end
+    let(:custom_field_instance) { subject.custom_field_instances.first }
+    let(:customer_type_rate) { subject.customer_type_rates.first }
+    let(:rate_custom_field_instance) { customer_type_rate.custom_field_instances.first }
+
+    before do
+      stub_request(:get, availability_url).to_return(
+        body: availability_json,
+        status: 200
+      )
+    end
+
+    it 'returns an availability' do
+      expect(subject.capacity).to eq(10)
+      # availability item
+      expect(subject.item.name).to eq('Jet Ski Tour')
+      # availability custom type rates
+      expect(subject.customer_type_rates.size).to eq(1)
+      expect(customer_type_rate.total).to eq(20000)
+      expect(customer_type_rate.customer_type.singular).to eq('Adult')
+      expect(customer_type_rate.customer_prototype.display_name).to eq('Adult')
+      expect(customer_type_rate.custom_field_instances.size).to eq(1)
+      expect(rate_custom_field_instance.pk).to eq(8629)
+      expect(rate_custom_field_instance.custom_field.pk).to eq(43879)
+      # availability custom field instances
+      expect(subject.custom_field_instances.size).to eq(1)
+      expect(custom_field_instance.pk).to eq(47974)
+      expect(custom_field_instance.custom_field.pk).to eq(3387)
+    end
+  end
+
   describe :availability_logdings do
     subject { company.availability_logdings(availability_id: availability_id).first }
     let(:availability_logdings_json) { fixture('availability_lodgings.json') }

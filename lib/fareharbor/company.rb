@@ -10,7 +10,7 @@ module Fareharbor
       Fareharbor::Availability.where(
         availability_id: availability_id,
         shortname: self.shortname
-      ).first
+      ).get
     end
 
     def availability_logdings(availability_id:)
