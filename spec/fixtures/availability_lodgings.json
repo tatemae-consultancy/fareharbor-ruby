@@ -1,0 +1,9 @@
+{
+  "lodgings": [
+    {
+      "pk": 231,
+      "name": "Wyndham Royal Garden",
+      "is_pickup_available": true
+    }
+  ]
+}

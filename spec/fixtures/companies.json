@@ -1,0 +1,11 @@
+{
+  "companies": [
+    {
+      "shortname": "hawaiianadventures",
+      "name": "Hawaiian Adventures"
+    }, {
+      "shortname": "surflessonshawaii",
+      "name": "Surf Lessons Hawaii"
+    }
+  ]
+}
