@@ -1,8 +1,6 @@
 # Fareharbor::Ruby
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fareharbor/ruby`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A Ruby client for interacting with the [Fareharbor API](https://github.com/FareHarbor/fareharbor-docs).
 
 ## Installation
 
@@ -22,7 +20,47 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Before getting started with the [Fareharbor API](https://github.com/FareHarbor/fareharbor-docs), you'll need to [get access credentials](mailto:sales+api@fareharbor.com).
+
+### Configuration
+
+Once you have your token, start by configuring the Fareharbor object. If you are using Rails, put the following into `config/initializers/fareharbor.rb`:
+
+```ruby
+Fareharbor.configure do |config|
+  config.app_token  = ENV['FAREHARBOR_APP_TOKEN']
+  config.user_token = ENV['FAREHARBOR_USER_TOKEN']
+end
+```
+
+_(It's a good idea to set your credentials in environment variables)_
+
+### Basic Usage
+
+For more information about what resources are available, please refer to the [Fareharbor API Documentation](https://github.com/FareHarbor/fareharbor-docs/blob/master/external-api/endpoints.md).
+
+```ruby
+companies = Fareharbor::Company.all
+# => Returns an array of company objects
+company = companies.detect { |c| c.name == 'Hawaiian Adventures' }
+# => Returns a single company object (or nil if not found)
+agents = company.agents
+# => Returns an array of agents for this company
+availability_logdings = company.availability_logdings(availability_id: '1234')
+# => Returns an array of logdings for the specified availability
+desks = company.desks
+# => Returns an array of desks for this company
+items = company.items
+# => Returns an array of items for this company
+item = items.first
+# => Returns a single item
+item.customer_prototypes
+# => Returns an array of customer_prototypes for this item
+item.images
+# => Returns an array of images for this item
+lodgings = company.lodgings
+# => Returns an array of lodgings for this company
+```
 
 ## Development
 
