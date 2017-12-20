@@ -42,22 +42,31 @@ For more information about what resources are available, please refer to the [Fa
 ```ruby
 companies = Fareharbor::Company.all
 # => Returns an array of company objects
+
 company = companies.detect { |c| c.name == 'Hawaiian Adventures' }
 # => Returns a single company object (or nil if not found)
+
 agents = company.agents
 # => Returns an array of agents for this company
+
 availability_logdings = company.availability_logdings(availability_id: '1234')
 # => Returns an array of logdings for the specified availability
+
 desks = company.desks
 # => Returns an array of desks for this company
+
 items = company.items
 # => Returns an array of items for this company
+
 item = items.first
 # => Returns a single item
+
 item.customer_prototypes
 # => Returns an array of customer_prototypes for this item
+
 item.images
 # => Returns an array of images for this item
+
 lodgings = company.lodgings
 # => Returns an array of lodgings for this company
 ```
